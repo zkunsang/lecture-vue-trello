@@ -20,6 +20,8 @@
 <script>
 import {board} from '../api'
 import AddBoard from '../components/AddBoard'
+import {mapState} from 'vuex'
+import vuex from 'vuex'
 
 export default {
     components: {
@@ -29,8 +31,7 @@ export default {
         return {
             loading: false,
             boards: [],
-            error: '',
-            isAddBoard: false
+            error: ''
         }
     },
     created() {
@@ -41,6 +42,9 @@ export default {
         this.$refs.boardItem.forEach(el => {
             el.style.backgroundColor = el.dataset.bgcolor
         })
+    },
+    computed: {
+        ...mapState(['isAddBoard']),
     },
     methods: {
         fetchData() {
@@ -55,10 +59,7 @@ export default {
             })
             
         },
-        addBoard() {
-            this.isAddBoard=true;
-            console.log('addBoard()')
-        },
+        addBoard() {},
         onAddBoard(title) {
             board.create(title)
             .then(() => this.fetchData());
